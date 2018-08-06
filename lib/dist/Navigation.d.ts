@@ -2,6 +2,8 @@ import { Store } from './components/Store';
 import { EventsRegistry } from './events/EventsRegistry';
 import { ComponentProvider } from 'react-native';
 import { ComponentType } from 'react';
+import { LayoutRoot, Layout } from './interfaces/Layout';
+import { Options } from './interfaces/Options';
 import { Props as TouchablePreviewProps } from './adapters/TouchablePreview';
 export declare class Navigation {
     readonly Element: React.ComponentType<{
@@ -34,19 +36,19 @@ export declare class Navigation {
     /**
      * Reset the app to a new layout
      */
-    setRoot(layout: any): Promise<any>;
+    setRoot(layout: LayoutRoot): Promise<any>;
     /**
      * Set default options to all screens. Useful for declaring a consistent style across the app.
      */
-    setDefaultOptions(options: any): void;
+    setDefaultOptions(options: Options): void;
     /**
      * Change a component's navigation options
      */
-    mergeOptions(componentId: string, options: any): void;
+    mergeOptions(componentId: string, options: Options): void;
     /**
      * Show a screen as a modal.
      */
-    showModal(layout: any): Promise<any>;
+    showModal(layout: Layout): Promise<any>;
     /**
      * Dismiss a modal by componentId. The dismissed modal can be anywhere in the stack.
      */
@@ -58,7 +60,7 @@ export declare class Navigation {
     /**
      * Push a new layout into this screen's navigation stack.
      */
-    push(componentId: string, layout: any): Promise<any>;
+    push(componentId: string, layout: Layout): Promise<any>;
     /**
      * Pop a component from the stack, regardless of it's position.
      */
@@ -74,11 +76,11 @@ export declare class Navigation {
     /**
      * Sets new root component to stack.
      */
-    setStackRoot(componentId: string, layout: any): Promise<any>;
+    setStackRoot(componentId: string, layout: Layout): Promise<any>;
     /**
      * Show overlay on top of the entire app
      */
-    showOverlay(layout: any): Promise<any>;
+    showOverlay(layout: Layout): Promise<any>;
     /**
      * dismiss overlay by componentId
      */
