@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.mocks.ImageLoaderMock;
-import com.reactnativenavigation.mocks.TitleBarReactViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarBackgroundViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarButtonCreatorMock;
 import com.reactnativenavigation.parse.Component;
@@ -42,8 +41,8 @@ public class TopBarBackgroundComponentTest extends BaseTest {
         });
         Activity activity = newActivity();
         topBarBackgroundViewController = spy(new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()));
-        StackLayout parent = new StackLayout(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), topBarBackgroundViewController, new TopBarController(), onClickListener, null);
-        uut = new TopBar(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), topBarBackgroundViewController, onClickListener, parent, ImageLoaderMock.mock());
+        StackLayout parent = new StackLayout(activity, new TopBarButtonCreatorMock(), topBarBackgroundViewController, new TopBarController(), onClickListener, null);
+        uut = new TopBar(activity, new TopBarButtonCreatorMock(), topBarBackgroundViewController, onClickListener, parent, ImageLoaderMock.mock());
         parent.addView(uut);
     }
 
@@ -57,7 +56,7 @@ public class TopBarBackgroundComponentTest extends BaseTest {
         TopBarBackgroundView background = (TopBarBackgroundView) ViewUtils.findChildrenByClassRecursive(uut, TopBarBackgroundView.class).get(0);
         assertThat(background).isNotNull();
         assertThat(background.getLayoutParams().width).isEqualTo(ViewGroup.LayoutParams.MATCH_PARENT);
-        assertThat(background.getLayoutParams().height).isEqualTo(100);
+        assertThat(background.getLayoutParams().height).isEqualTo(ViewGroup.LayoutParams.MATCH_PARENT);
     }
 
     @Test

@@ -118,7 +118,7 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 	} else {
 		viewController.navigationController.navigationBar.barStyle = UIBarStyleDefault;
 	}
-
+	
 	if (self.translucent) {
 		viewController.navigationController.navigationBar.translucent = [self.translucent boolValue];
 	} else {
@@ -149,16 +149,41 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 		viewController.navigationController.navigationBar.accessibilityIdentifier = self.testID;
 	}
 	
-	if (self.buttonColor) {
-		UIColor* buttonColor = [RCTConvert UIColor:self.buttonColor];
-		viewController.navigationController.navigationBar.tintColor = buttonColor;
-	} else {
-		viewController.navigationController.navigationBar.tintColor = nil;
-	}
-	
 	if (self.rightButtons || self.leftButtons) {
 		_navigationButtons = [[RNNNavigationButtons alloc] initWithViewController:(RNNRootViewController*)viewController];
 		[_navigationButtons applyLeftButtons:self.leftButtons rightButtons:self.rightButtons defaultLeftButtonStyle:self.leftButtonStyle defaultRightButtonStyle:self.rightButtonStyle];
+	}
+}
+
+- (void)setRightButtonColor:(NSNumber *)rightButtonColor {
+	_rightButtonColor = rightButtonColor;
+	_rightButtonStyle.color = rightButtonColor;
+}
+
+- (void)setRightButtonDisabledColor:(NSNumber *)rightButtonDisabledColor {
+	_rightButtonDisabledColor = rightButtonDisabledColor;
+	_rightButtonStyle.disabledColor = rightButtonDisabledColor;
+}
+
+- (void)setLeftButtonColor:(NSNumber *)leftButtonColor {
+	_leftButtonColor = leftButtonColor;
+	_leftButtonStyle.color = leftButtonColor;
+}
+
+- (void)setLeftButtonDisabledColor:(NSNumber *)leftButtonDisabledColor {
+	_leftButtonDisabledColor = leftButtonDisabledColor;
+	_leftButtonStyle.disabledColor = leftButtonDisabledColor;
+}
+
+- (void)setRightButtons:(id)rightButtons {
+	if ([rightButtons isKindOfClass:[NSArray class]]) {
+		_rightButtons = rightButtons;
+	} else if ([rightButtons isKindOfClass:[NSDictionary class]]) {
+		if (rightButtons[@"id"]) {
+			_rightButtons = @[rightButtons];
+		} else {
+			[_rightButtonStyle mergeWith:rightButtons];
+		}
 	}
 }
 
@@ -170,18 +195,6 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 			_leftButtons = @[leftButtons];
 		} else {
 			[_leftButtonStyle mergeWith:leftButtons];
-		}
-	}
-}
-
-- (void)setRightButtons:(id)rightButtons {
-	if ([rightButtons isKindOfClass:[NSArray class]]) {
-		_rightButtons = rightButtons;
-	} else if ([rightButtons isKindOfClass:[NSDictionary class]]) {
-		if (rightButtons[@"id"]) {
-			_rightButtons = @[rightButtons];
-		} else {
-			[_rightButtonStyle mergeWith:rightButtons];
 		}
 	}
 }
